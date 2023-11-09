@@ -30,7 +30,7 @@ def produire_historique(nom, debut, fin, valeur_desirée):
     return (debut, valeur_desirée)   
 
  
-symbole = 'goog'
+symbole = 'HOG'
 url = f'https://pax.ulaval.ca/action/{symbole}/historique/'
 
 params = {
@@ -45,3 +45,4 @@ print(réponse)
 
 for clé in réponse.keys():
     print(clé)
+    
