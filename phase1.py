@@ -1,7 +1,7 @@
 import argparse
 from datetime import datetime, date
-import requests
 import json
+import requests
 
 def analyser_commande():
     """
@@ -39,36 +39,28 @@ def produire_historique(nom, debut, fin, valeur_desirée):
     }
 
     réponse = requests.get(url=url, params=params)
-
     if réponse.status_code == 200:
         réponse = json.loads(réponse.text)
-        #print(réponse)
         affichage = []
       
-        for valeur_date, valeurs in réponse['historique'].items(): 
+        for valeur_date, valeurs in réponse['historique'].items():
             try:
                 date = datetime.strptime(valeur_date, '%Y-%m-%d').date()
             except ValueError:
-                continue  
+                continue
             valeur = valeurs.get(valeur_desirée)
             
             if valeur is not None:
                 affichage.append((date, valeur))         
-        #print (affichage)
         return affichage
-    else:
-        print(f'Erreur lors de la requête: {réponse.status_code}')
-        return None
     
 def afficher_historique(nom, debut, fin, valeur_desirée, réponse):
     print (f'titre={nom}: valeur={valeur_desirée}, début={debut}, fin={fin}')
     print(réponse)
-        
 if __name__ == '__main__':
     args = analyser_commande()
     start = args.date_debut if args.date_debut else date.today().isoformat()
-    end = args.date_fin if args.date_fin else date.today().isoformat()
-    
+    end = args.date_fin if args.date_fin else date.today().isoformat() 
     for symbole in args.symbols:
         historique = produire_historique(symbole,start, end, args.valeur)
         if historique is not None:
