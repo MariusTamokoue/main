@@ -61,7 +61,7 @@ def produire_historique(nom, debut, fin, valeur_desirée):
             valeur = valeurs.get(valeur_desirée)
             if valeur is not None:
                 affichage.append((date_att, valeur))
-    return affichage 
+    return affichage
 def afficher_historique(nom, debut, fin, valeur_desirée, réponse):
     """
         Afficher historique
