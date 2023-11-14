@@ -52,7 +52,7 @@ def produire_historique(nom, debut, fin, valeur_desirée):
     affichage = []
     réponse = requests.get(url=url, params=params)
     if réponse.status_code == 200:
-        réponse = json.loads(réponse.text)  
+        réponse = json.loads(réponse.text)
         for valeur_date, valeurs in réponse['historique'].items():
             try:
                 date_att = datetime.strptime(valeur_date, '%Y-%m-%d').date()
@@ -61,9 +61,7 @@ def produire_historique(nom, debut, fin, valeur_desirée):
             valeur = valeurs.get(valeur_desirée)
             if valeur is not None:
                 affichage.append((date_att, valeur))
-    return affichage
-    
-    
+    return affichage 
 def afficher_historique(nom, debut, fin, valeur_desirée, réponse):
     """
         Afficher historique
