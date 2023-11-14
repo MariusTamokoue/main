@@ -1,3 +1,10 @@
+"""
+    Phase1
+     traiter les arguments de la ligne de commande, d'une part,
+     puis à utiliser ces arguments pour faire appel à un serveur
+     qui vous retournera l'information dont vous avez besoin
+     pour produire la sortie désirée
+"""
 import argparse
 from datetime import datetime, date
 import json
@@ -30,31 +37,43 @@ def analyser_commande():
 
 
 def produire_historique(nom, debut, fin, valeur_desirée):
-    #symbole = 'GOOG'
+    """
+        Produire l'historique
+        
+        Return:
+            l'historique en fonction du symbole recu, la date de debut,
+            la date de fin et la valeur désirée
+    """
     url = f'https://pax.ulaval.ca/action/{nom}/historique/'
 
     params = {
         'début': debut,
         'fin': fin,
     }
-
+    affichage = []
     réponse = requests.get(url=url, params=params)
     if réponse.status_code == 200:
         réponse = json.loads(réponse.text)
-        affichage = []
+        
       
         for valeur_date, valeurs in réponse['historique'].items():
             try:
-                date = datetime.strptime(valeur_date, '%Y-%m-%d').date()
+                date_att = datetime.strptime(valeur_date, '%Y-%m-%d').date()
             except ValueError:
                 continue
             valeur = valeurs.get(valeur_desirée)
             
             if valeur is not None:
-                affichage.append((date, valeur))         
-        return affichage
+                affichage.append((date_att, valeur))         
+    return affichage
     
 def afficher_historique(nom, debut, fin, valeur_desirée, réponse):
+    """
+        Afficher historique
+        
+        Affiche:
+            Affiche l'historique produit
+    """
     print (f'titre={nom}: valeur={valeur_desirée}, début={debut}, fin={fin}')
     print(réponse)
 if __name__ == '__main__':
