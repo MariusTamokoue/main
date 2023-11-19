@@ -54,27 +54,16 @@ def produire_historique(nom, debut, fin, valeur_desirée):
     if réponse.status_code == 200:
         réponse = json.loads(réponse.text)
         for valeur_date, valeurs in réponse['historique'].items():
-            try:
-                date_att = datetime.strptime(valeur_date, '%Y-%m-%d').date()
-            except ValueError:
-                continue
+
+            date_att = datetime.strptime(valeur_date, '%Y-%m-%d').date()
+
             valeur = valeurs.get(valeur_desirée)
-            if valeur is not None:
-                affichage.append((date_att, valeur))
+            affichage.append((date_att, valeur))
     return affichage
-def afficher_historique(nom, debut, fin, valeur_desirée, réponse):
-    """
-        Afficher historique
-        Affiche:
-            Affiche l'historique produit
-    """
-    print (f'titre={nom}: valeur={valeur_desirée}, début={debut}, fin={fin}')
-    print(réponse)
 if __name__ == '__main__':
     args = analyser_commande()
-    start = args.date_debut if args.date_debut else date.today().isoformat()
-    end = args.date_fin if args.date_fin else date.today().isoformat()
+    start = args.date_debut if args.date_debut else args.date_fin
+    end = args.date_fin if args.date_fin else date.today().strftime('%Y-%m-%d')
     for symbole in args.symbols:
-        historique = produire_historique(symbole,start, end, args.valeur)
-        if historique is not None:
-            afficher_historique(symbole, start, end, args.valeur, historique)
+        print (f'titre={symbole}: valeur={args.valeur}, début={repr(date.fromisoformat(start))}, fin={repr(date.fromisoformat(end))}')
+        print(produire_historique(symbole, start, end, args.valeur))
