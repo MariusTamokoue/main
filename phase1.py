@@ -65,5 +65,7 @@ if __name__ == '__main__':
     start = args.date_debut if args.date_debut else args.date_fin
     end = args.date_fin if args.date_fin else date.today().strftime('%Y-%m-%d')
     for symbole in args.symbols:
-        print (f'titre={symbole}: valeur={args.valeur}, début={repr(date.fromisoformat(start))}, fin={repr(date.fromisoformat(end))}')
+        print (f'titre={symbole}: valeur={args.valeur}, 
+               début={repr(date.fromisoformat(start))}, 
+               fin={repr(date.fromisoformat(end))}')
         print(produire_historique(symbole, start, end, args.valeur))
