@@ -54,9 +54,7 @@ def produire_historique(nom, debut, fin, valeur_desirée):
     if réponse.status_code == 200:
         réponse = json.loads(réponse.text)
         for valeur_date, valeurs in réponse['historique'].items():
-
             date_att = datetime.strptime(valeur_date, '%Y-%m-%d').date()
-
             valeur = valeurs.get(valeur_desirée)
             affichage.append((date_att, valeur))
     return affichage
@@ -65,7 +63,6 @@ if __name__ == '__main__':
     start = args.date_debut if args.date_debut else args.date_fin
     end = args.date_fin if args.date_fin else date.today().strftime('%Y-%m-%d')
     for symbole in args.symbols:
-        print (f'titre={symbole}: valeur={args.valeur}, 
-               début={repr(date.fromisoformat(start))}, 
-               fin={repr(date.fromisoformat(end))}')
+        print (f'titre={symbole}: valeur={args.valeur}, début=
+               {repr(date.fromisoformat(start))}, fin={repr(date.fromisoformat(end))}')
         print(produire_historique(symbole, start, end, args.valeur))
