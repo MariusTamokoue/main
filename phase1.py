@@ -62,7 +62,8 @@ if __name__ == '__main__':
     args = analyser_commande()
     start = args.date_debut if args.date_debut else args.date_fin
     end = args.date_fin if args.date_fin else date.today().strftime('%Y-%m-%d')
+    start = date.fromisoformat(start)
+    end = date.fromisoformat(end)
     for symbole in args.symbols:
-        print (f'titre={symbole}: valeur={args.valeur}, début=
-               {repr(date.fromisoformat(start))}, fin={repr(date.fromisoformat(end))}')
+        print (f'titre={symbole}: valeur={args.valeur}, début={repr(start)}, fin={repr(end)}')
         print(produire_historique(symbole, start, end, args.valeur))
