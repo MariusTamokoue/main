@@ -24,9 +24,9 @@ def analyser_commande():
         'Extraction de valeurs historiques pour un ou plusieurs symboles boursiers.')
     parser.add_argument("symbols", nargs="+", help="Nom d'un symbole boursier")
     #parser.add_argument("-h", "--help", help = "show this help message and exit")
-    parser.add_argument("-d", "--date_debut",
+    parser.add_argument("-d", "--date_debut", metavar="DATE", dest="date_debut",
                         help="Date recherchée la plus ancienne (format: AAAA-MM-JJ)")
-    parser.add_argument("-f", "--date_fin",
+    parser.add_argument("-f", "--date_fin", metavar="DATE", dest="date_fin",
                         help="Date recherchée la plus récente (format: AAAA-MM-JJ)")
     parser.add_argument("-v", "--valeur", choices=["fermeture", "ouverture", "min",
                         "max", "volume"], default="fermeture", help="Valeur désirée")
